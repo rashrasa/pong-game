@@ -10,7 +10,7 @@ import java.io.IOException;
 public class GameDisplay extends Application {
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxml = new FXMLLoader(GameDisplay.class.getResource("game-display.fxml"));
+        FXMLLoader fxml = new FXMLLoader(GameDisplay.class.getResource("main-menu.fxml"));
         Scene scene = new Scene(fxml.load(), 100, 100);
         stage.setTitle("Pong");
         stage.setScene(scene);

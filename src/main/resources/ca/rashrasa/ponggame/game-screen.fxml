@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: orange;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.rashrasa.ponggame.GameScreenController">
+   <children>
+      <Label layoutX="427.0" layoutY="23.0" text="WINNING SCORE">
+         <font>
+            <Font name="Maiandra GD" size="12.0" />
+         </font>
+      </Label>
+      <Text fx:id="winning_score_label" layoutX="454.0" layoutY="50.0" strokeType="OUTSIDE" strokeWidth="0.0" text="5" textAlignment="CENTER" wrappingWidth="43.826171875">
+         <font>
+            <Font name="Maiandra GD" size="12.0" />
+         </font>
+      </Text>
+      <Text layoutX="238.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player">
+         <font>
+            <Font name="Century" size="20.0" />
+         </font>
+      </Text>
+      <Text layoutX="292.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+         <font>
+            <Font name="Century" size="45.0" />
+         </font>
+      </Text>
+      <Text fx:id="user_score_label1" layoutX="256.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+         <font>
+            <Font name="Century" size="45.0" />
+         </font>
+      </Text>
+      <Text fx:id="bot_score_label1" layoutX="317.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0">
+         <font>
+            <Font name="Century" size="45.0" />
+         </font>
+      </Text>
+      <Text layoutX="313.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Bot">
+         <font>
+            <Font name="Century" size="20.0" />
+         </font>
+      </Text>
+      <AnchorPane layoutX="50.0" layoutY="86.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: white;">
+         <children>
+            <Rectangle fx:id="user" height="15.0" layoutX="200.0" layoutY="480.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="100.0" />
+            <Rectangle fx:id="bot" height="15.0" layoutX="200.0" layoutY="5.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="100.0" />
+            <Circle fx:id="puck" fill="ORANGE" layoutX="250.0" layoutY="250.0" radius="20.0" smooth="false" stroke="BLACK" strokeType="INSIDE" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

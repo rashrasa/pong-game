@@ -2,11 +2,15 @@ package ca.rashrasa.ponggame;
 
 import javafx.fxml.FXML;
 
-public class GameController {
+public class PreGameMenuController {
 
+    @FXML
+    protected void setMaxScore(){
+
+    }
 
     @FXML
     protected void onStartPress(){
-        System.out.println("test success");
+
     }
 }
