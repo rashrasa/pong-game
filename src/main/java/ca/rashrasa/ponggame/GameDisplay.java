@@ -17,7 +17,7 @@ public class GameDisplay extends Application {
         stage.setResizable(false);
         stage.setX(400);
         stage.setY(100);
-        stage.setWidth(800);
+        stage.setWidth(600);
         stage.setHeight(600);
         stage.show();
     }
