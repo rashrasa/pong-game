@@ -1,4 +1,4 @@
 package ca.rashrasa.ponggame;
 
-public class User implements Player {
+public class User {
 }
