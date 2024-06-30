@@ -45,8 +45,8 @@ public class GameDisplay extends Application {
     @FXML
     protected void onStartPress(ActionEvent e) throws IOException {
         Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-        game.startGame(Integer.parseInt(max_score_field.getText()), (int)(bot_difficulty_slider.getValue()));
         stage.setScene(new Scene(gameScreen.load()));
+        game.startGame(Integer.parseInt(max_score_field.getText()), (int)(bot_difficulty_slider.getValue()));
     }
 
     @FXML
@@ -61,7 +61,7 @@ public class GameDisplay extends Application {
     }
 
     @FXML
-    protected void onExitPress(ActionEvent e) throws Exception {
+    protected void onExitPress(ActionEvent e){
         System.exit(0);
     }
 }
