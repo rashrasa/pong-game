@@ -1,4 +1,8 @@
 package ca.rashrasa.ponggame;
 
-public class User {
+public class User implements Runnable{
+    @Override
+    public void run() {
+
+    }
 }
