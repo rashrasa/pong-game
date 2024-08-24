@@ -8,12 +8,26 @@ public class Game{
     private Bot bot;
 
     /**
-    Stores game information and contains its execution.
+     Stores game information and contains its execution.
+     Game execution:
+     1. Game tick is called for x milliseconds
+        - Usually for 1000/(tick rate) milliseconds
+     2. All objects that perform actions are ticked by the game the same x milliseconds
+     3. Objects that are ticked calculate their new positions, velocities, and any interactions with other objects
      */
     public Game(){
         this.running = false;
     }
 
+
+
+
+    public void startGame(int max_score, int bot_difficulty){
+        System.out.println("Max Score: "+max_score);
+        System.out.println("Bot Difficulty: "+bot_difficulty);
+        this.running=true;
+        this.run();
+    }
 
     public void run() {
         long lastUpdate=System.currentTimeMillis();
@@ -25,13 +39,6 @@ public class Game{
                 lastUpdate=currentTime;
             }
         }
-    }
-
-    public void startGame(int max_score, int bot_difficulty){
-        System.out.println("Max Score: "+max_score);
-        System.out.println("Bot Difficulty: "+bot_difficulty);
-        this.running=true;
-        this.run();
     }
 
     public void stop(){
