@@ -1,6 +1,6 @@
 package ca.rashrasa.ponggame;
 
-public class Bot implements GameElement {
+public class Bot extends GameElement {
     public Bot(){
 
     }

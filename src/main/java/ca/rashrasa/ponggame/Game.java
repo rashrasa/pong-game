@@ -9,7 +9,7 @@ public class Game {
     private User user;
     private Bot bot;
     public final int TICK_RATE = 60;
-    private final ArrayList<? extends GameElement> gameElements;
+    private final ArrayList<GameElement> gameElements;
 
     /**
      Stores game information and contains its execution.
@@ -28,17 +28,23 @@ public class Game {
         System.out.println("Max Score: "+max_score);
         System.out.println("Bot Difficulty: "+bot_difficulty);
         this.running=true;
-        this.gameElements.add(new Bot())
+        this.gameElements.add(new Bot());
         this.gameElements.add(new Puck(new Vector(250,250), new Vector(1,-1)));
         this.run();
     }
     public void run() {
+        long startTime = System.nanoTime();
+        double tickPeriod = 1000.0/TICK_RATE;
+        long updates = 0;
         while(running){
-            this.tick(1000.0/TICK_RATE);
+            if((System.nanoTime()-startTime)/tickPeriod > updates){
+                this.tick(tickPeriod);
+                updates++;
+            }
+
         }
     }
 
-    @Override
     public void tick(double ms){
         for(GameElement e: this.gameElements){
             e.tick(ms);

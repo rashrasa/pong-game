@@ -1,6 +1,6 @@
 package ca.rashrasa.ponggame;
 
-public class Puck {
+public class Puck extends GameElement{
     private volatile Vector position;
     private volatile Vector velocity;
 
