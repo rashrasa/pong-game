@@ -2,8 +2,9 @@ package ca.rashrasa.ponggame;
 
 import java.util.ArrayList;
 
-public class Game {
+public class Game implements Runnable{
     private volatile boolean running;
+    private volatile boolean roundStarted;
 
     private Puck puck;
     private User user;
@@ -20,32 +21,38 @@ public class Game {
      3. Objects that are ticked calculate their new positions, velocities, and any interactions with other objects
      */
     public Game(){
-        this.running = false;
+        this.running=true;
         this.gameElements = new ArrayList<>();
+        this.roundStarted=false;
     }
 
     public void startGame(int max_score, int bot_difficulty){
         System.out.println("Max Score: "+max_score);
         System.out.println("Bot Difficulty: "+bot_difficulty);
-        this.running=true;
-        this.gameElements.add(new Bot());
-        this.gameElements.add(new Puck(new Vector(250,250), new Vector(1,-1)));
-        this.run();
+        this.user = new User();
+        this.bot = new Bot();
+        this.puck = new Puck(new Vector(250,250), new Vector(1,-1));
+        this.gameElements.add(this.bot);
+        this.gameElements.add(this.puck);
+        this.gameElements.add(this.user);
+        this.roundStarted = true;
     }
     public void run() {
         long startTime = System.nanoTime();
         double tickPeriod = 1000.0/TICK_RATE;
         long updates = 0;
         while(running){
-            if((System.nanoTime()-startTime)/tickPeriod > updates){
-                this.tick(tickPeriod);
+            if((System.nanoTime()-startTime)/(tickPeriod*1000000) > updates){
+                if(roundStarted){
+                    this.tick(tickPeriod);
+                }
                 updates++;
             }
 
         }
     }
 
-    public void tick(double ms){
+    private void tick(double ms){
         for(GameElement e: this.gameElements){
             e.tick(ms);
         }
@@ -65,7 +72,7 @@ public class Game {
 
     // User info
     public Vector getUserPosition(){
-        return null;
+        return new Vector(user.getX(), user.getY());
     }
     public double getUserWidth(){
         return 0.0;
@@ -85,5 +92,16 @@ public class Game {
         return 0.0;
     }
 
-
+    public void leftPressed() {
+        this.user.leftPressed();
+    }
+    public void rightPressed() {
+        this.user.rightPressed();
+    }
+    public void leftReleased() {
+        this.user.leftReleased();
+    }
+    public void rightReleased() {
+        this.user.rightReleased();
+    }
 }

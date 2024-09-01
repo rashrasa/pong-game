@@ -46,7 +46,7 @@
       </Text>
       <AnchorPane layoutX="50.0" layoutY="86.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: black;">
          <children>
-            <Rectangle fx:id="user" fill="WHITE" height="15.0" layoutX="200.0" layoutY="480.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="100.0" />
+            <Rectangle fx:id="user" fill="WHITE" height="15.0" layoutX="200.0" layoutY="480.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="100.0"/>
             <Rectangle fx:id="bot" fill="WHITE" height="15.0" layoutX="200.0" layoutY="5.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="100.0" />
             <Circle fx:id="puck" fill="WHITE" layoutX="250.0" layoutY="250.0" radius="20.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
          </children>
