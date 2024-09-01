@@ -7,23 +7,23 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.rashrasa.ponggame.GameDisplay">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.rashrasa.ponggame.GameDisplay">
    <children>
-      <Button fx:id="start_button" layoutX="180.0" layoutY="215.0" onAction="#onStartPress" prefHeight="32.0" prefWidth="244.0" style="-fx-background-color: orange;" text="Start" textFill="WHITE">
+      <Button fx:id="start_button" layoutX="180.0" layoutY="215.0" onAction="#onStartPress" prefHeight="32.0" prefWidth="244.0" style="-fx-background-color: black; -fx-border-color: white;" text="Start" textFill="WHITE">
          <font>
-            <Font name="Candara" size="30.0" />
+            <Font name="Candara Bold" size="30.0" />
          </font>
       </Button>
-      <Slider fx:id="bot_difficulty_slider" blockIncrement="1.0" layoutX="354.0" layoutY="345.0" majorTickUnit="1.0" max="4.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" style="-fx-border-color: orange;" value="2.0" />
-      <Label layoutX="357.0" layoutY="321.0" text="SELECT BOT DIFFICULTY">
+      <Slider fx:id="bot_difficulty_slider" blockIncrement="1.0" layoutX="354.0" layoutY="345.0" majorTickUnit="1.0" max="4.0" minorTickCount="0" showTickLabels="true" showTickMarks="true" snapToTicks="true" style="-fx-border-color: white; -fx-text-fill: orange;" value="2.0" />
+      <Label layoutX="357.0" layoutY="321.0" text="SELECT BOT DIFFICULTY" textFill="WHITE">
          <font>
-            <Font name="Maiandra GD" size="12.0" />
+            <Font name="Candara Bold" size="12.0" />
          </font>
       </Label>
       <TextField fx:id="max_score_field" layoutX="106.0" layoutY="345.0" text="5" />
-      <Label layoutX="131.0" layoutY="321.0" text="WINNING SCORE">
+      <Label layoutX="131.0" layoutY="321.0" text="WINNING SCORE" textFill="WHITE">
          <font>
-            <Font name="Maiandra GD" size="12.0" />
+            <Font name="Candara Bold" size="12.0" />
          </font>
       </Label>
    </children>

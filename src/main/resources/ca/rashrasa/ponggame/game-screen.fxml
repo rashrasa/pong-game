@@ -7,8 +7,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: orange;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.rashrasa.ponggame.GameScreenController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ca.rashrasa.ponggame.GameScreenController">
    <children>
       <Label layoutX="427.0" layoutY="23.0" text="WINNING SCORE">
          <font>
@@ -20,12 +19,12 @@
             <Font name="Maiandra GD" size="12.0" />
          </font>
       </Text>
-      <Text layoutX="238.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Player">
+      <Text layoutX="250.0" layoutY="26.0" strokeType="OUTSIDE" strokeWidth="0.0" text="You">
          <font>
             <Font name="Century" size="20.0" />
          </font>
       </Text>
-      <Text layoutX="292.0" layoutY="74.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-">
+      <Text layoutX="292.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="0.0" text="-" wrappingWidth="14.9853515625">
          <font>
             <Font name="Century" size="45.0" />
          </font>
@@ -45,11 +44,11 @@
             <Font name="Century" size="20.0" />
          </font>
       </Text>
-      <AnchorPane layoutX="50.0" layoutY="86.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: white;">
+      <AnchorPane layoutX="50.0" layoutY="86.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: black;">
          <children>
-            <Rectangle fx:id="user" height="15.0" layoutX="200.0" layoutY="480.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="100.0" />
-            <Rectangle fx:id="bot" height="15.0" layoutX="200.0" layoutY="5.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="100.0" />
-            <Circle fx:id="puck" fill="ORANGE" layoutX="250.0" layoutY="250.0" radius="20.0" smooth="false" stroke="BLACK" strokeType="INSIDE" />
+            <Rectangle fx:id="user" fill="WHITE" height="15.0" layoutX="200.0" layoutY="480.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="100.0" />
+            <Rectangle fx:id="bot" fill="WHITE" height="15.0" layoutX="200.0" layoutY="5.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="100.0" />
+            <Circle fx:id="puck" fill="WHITE" layoutX="250.0" layoutY="250.0" radius="20.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
          </children>
       </AnchorPane>
    </children>
