@@ -65,32 +65,34 @@ public class Game implements Runnable{
 
         Vector userPositionTopLeft = getUserPosition();
         double userWidth = getUserWidth();
+        double userHeight = getUserHeight();
 
         Vector botPositionTopLeft = getBotPosition();
         double botWidth = getBotWidth();
         double botHeight = getBotHeight();
+        Vector botCenter = botPositionTopLeft.add(new Vector(botWidth/2.0, botHeight/2.0));
 
         // Puck -> User
-        if(puckBottom.y() >= userPositionTopLeft.y()){
+        if(puckBottom.y() >= userPositionTopLeft.y() && puckBottom.y() <= userPositionTopLeft.y()+userHeight){
             if(
                     puckBottom.x() >= userPositionTopLeft.x() &&
                     puckBottom.x() <= (userPositionTopLeft.x()+userWidth)
             ){
-                // puck new angle goes from -pi to 0 when point of collision goes from left to right
-                double theta = -(Math.PI * (1 + (userPositionTopLeft.x()-puckBottom.x())/userWidth));
+                // puck new angle goes from -5pi/6 to -pi/6 when point of collision goes from left to right
+                double theta = -((4.0/6.0 * Math.PI * (1 + (userPositionTopLeft.x()-puckBottom.x())/userWidth))+Math.PI/6.0);
                 this.puck.doCollisionAction(new Direction(theta));
                 this.user.doCollisionAction(new Direction(theta + Math.PI));
             }
         }
 
         // Puck -> Bot
-        if(puckTop.y() <= botPositionTopLeft.y()+botHeight){
+        if(puckTop.y() <= botPositionTopLeft.y()+botHeight && puckTop.y() >= botPositionTopLeft.y()){
             if(
                     puckTop.x() >= botPositionTopLeft.x() &&
                             puckTop.x() <= (botPositionTopLeft.x()+botWidth)
             ){
-                // puck new angle goes from pi to 0 when point of collision goes from left to right
-                double theta = Math.PI * (1 + (botPositionTopLeft.x()-puckTop.x())/botWidth);
+                // puck new angle goes from 5pi/6 to pi/6 when point of collision goes from left to right
+                double theta = (4.0/6.0 * Math.PI * (1 + (botPositionTopLeft.x()-puckTop.x())/botWidth))+Math.PI/6.0;
                 this.puck.doCollisionAction(new Direction(theta));
                 this.bot.doCollisionAction(new Direction(theta + Math.PI));
             }
@@ -116,6 +118,17 @@ public class Game implements Runnable{
                             )
                     )
             );
+        }
+
+        // Set bot direction - tracks puck
+        if(botCenter.x()<puckCenter.x()){
+            this.bot.setMoveDirection(1);
+        }
+        else if(botCenter.x()>puckCenter.x()){
+            this.bot.setMoveDirection(-1);
+        }
+        else{
+            this.bot.setMoveDirection(0);
         }
 
         // Tick all game elements

@@ -3,6 +3,9 @@ package ca.rashrasa.ponggame;
 public class Bot extends GameElement {
     private final double WIDTH = 100.0;
     private final double HEIGHT = 15.0;
+    private final double MOVE_SPEED = 200.0;
+
+    private int moveDirection = 0;
 
     private Vector position;
 
@@ -12,7 +15,8 @@ public class Bot extends GameElement {
 
     @Override
     public void tick(double ms) {
-        this.position = position.add(new Vector(0,0));
+        double seconds = ms/1000.0;
+        this.position = this.position.add(new Vector(moveDirection*MOVE_SPEED*seconds, 0));
     }
 
     @Override
@@ -22,6 +26,10 @@ public class Bot extends GameElement {
 
     public Vector getPosition() {
         return new Vector(position);
+    }
+
+    public void setMoveDirection(int d){
+        this.moveDirection = d;
     }
 
     public double getWidth(){
