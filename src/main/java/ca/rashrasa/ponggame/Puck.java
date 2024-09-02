@@ -1,8 +1,9 @@
 package ca.rashrasa.ponggame;
 
 public class Puck extends GameElement{
-    private volatile Vector position;
-    private volatile Vector velocity;
+    private Vector position;
+    private Vector velocity;
+    private double RADIUS = 20.0;
 
     public Puck(Vector start_pos, Vector start_vel){
         this.position = start_pos;
@@ -18,6 +19,12 @@ public class Puck extends GameElement{
     }
 
     public void tick(double ms){
+        this.position = this.position.add(
+                this.velocity.scalarProduct(ms/1000.0)
+        );
+    }
 
+    public double getRadius() {
+        return this.RADIUS;
     }
 }

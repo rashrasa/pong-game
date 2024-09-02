@@ -22,7 +22,6 @@ public class GameScreenController {
         this.game = game;
     }
 
-
     public void playerKeyPressed(KeyEvent keyEvent) {
         KeyCode key = keyEvent.getCode();
 
@@ -35,9 +34,6 @@ public class GameScreenController {
                 game.rightPressed();
                 break;
         }
-
-        System.out.println("User x: " + user.getLayoutX());
-        user.setLayoutX(this.game.getUserPosition().x());
     }
 
     public void playerKeyReleased(KeyEvent keyEvent){
@@ -51,6 +47,23 @@ public class GameScreenController {
                 game.rightReleased();
                 break;
         }
-        user.setLayoutX(this.game.getUserPosition().x());
+    }
+
+    public void playerKeyTyped(KeyEvent keyEvent) {
+    }
+
+    public void update(){
+        Vector puckPosition = this.game.getPuckPosition();
+        Vector playerPosition = this.game.getUserPosition();
+        Vector botPosition = this.game.getBotPosition();
+
+        this.puck.setLayoutX(puckPosition.x());
+        this.puck.setLayoutY(puckPosition.y());
+
+        this.user.setLayoutX(playerPosition.x());
+        this.user.setLayoutY(playerPosition.y());
+
+        this.bot.setLayoutX(botPosition.x());
+        this.bot.setLayoutY(botPosition.y());
     }
 }

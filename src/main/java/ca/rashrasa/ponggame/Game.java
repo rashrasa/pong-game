@@ -31,7 +31,7 @@ public class Game implements Runnable{
         System.out.println("Bot Difficulty: "+bot_difficulty);
         this.user = new User();
         this.bot = new Bot();
-        this.puck = new Puck(new Vector(250,250), new Vector(1,-1));
+        this.puck = new Puck(new Vector(250,250), new Vector(150,-50));
         this.gameElements.add(this.bot);
         this.gameElements.add(this.puck);
         this.gameElements.add(this.user);
@@ -64,32 +64,20 @@ public class Game implements Runnable{
 
     // Puck info
     public Vector getPuckPosition(){
-        return null;
+        return this.puck.getPosition();
     }
     public double getPuckRadius(){
-        return 0.0;
+        return this.puck.getRadius();
     }
 
     // User info
     public Vector getUserPosition(){
         return new Vector(user.getX(), user.getY());
     }
-    public double getUserWidth(){
-        return 0.0;
-    }
-    public double getUserHeight(){
-        return 0.0;
-    }
 
     // Bot info
     public Vector getBotPosition(){
-        return null;
-    }
-    public double getBotWidth(){
-        return 0.0;
-    }
-    public double getBotHeight(){
-        return 0.0;
+        return this.bot.getPosition();
     }
 
     public void leftPressed() {
@@ -103,5 +91,13 @@ public class Game implements Runnable{
     }
     public void rightReleased() {
         this.user.rightReleased();
+    }
+
+    public boolean isRoundStarted() {
+        return this.roundStarted;
+    }
+
+    public boolean isRunning(){
+        return this.running;
     }
 }

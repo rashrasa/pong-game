@@ -14,7 +14,7 @@ public class Vector {
     }
 
     public Vector (Vector v0){
-        this.x= v0.x();
+        this.x=v0.x();
         this.y=v0.y();
     }
 
@@ -25,5 +25,24 @@ public class Vector {
 
     public double y(){
         return this.y;
+    }
+
+    public Vector add(Vector v1){
+        return new Vector(
+                v1.x() + this.x(),
+                v1.y() + this.y()
+        );
+    }
+    public Vector scalarProduct(double scalar){
+        return new Vector(
+                this.x() * scalar,
+                this.y() * scalar
+        );
+    }
+
+    public double magnitude(){
+        return Math.sqrt(
+                this.x()*this.x() + this.y() * this.y()
+        );
     }
 }

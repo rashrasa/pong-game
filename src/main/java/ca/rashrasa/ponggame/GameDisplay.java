@@ -1,6 +1,7 @@
 package ca.rashrasa.ponggame;
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -28,6 +29,7 @@ public class GameDisplay extends Application {
     private FXMLLoader gameScreen=new FXMLLoader(GameDisplay.class.getResource("game-screen.fxml"));
     private Game game = new Game();
     private Thread gameThread = new Thread(game);
+    private Thread renderThread;
 
     @FXML TextField max_score_field;
     @FXML Slider bot_difficulty_slider;
@@ -52,18 +54,26 @@ public class GameDisplay extends Application {
 
     @FXML
     protected void onStartPress(ActionEvent e) throws IOException {
+
         AnchorPane root = gameScreen.load();
         GameScreenController controller = gameScreen.getController();
         controller.setGame(this.game);
 
+        renderThread = new Thread(new ViewRenderThread(this.game, controller));
+
         Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
         Scene scene = new Scene(root);
+
+        //Keyboard event handlers
         scene.addEventHandler(KeyEvent.KEY_PRESSED, controller::playerKeyPressed);
         scene.addEventHandler(KeyEvent.KEY_RELEASED, controller::playerKeyReleased);
+        scene.addEventHandler(KeyEvent.KEY_TYPED, controller::playerKeyTyped);
+
         stage.setScene(scene);
 
         game.startGame(Integer.parseInt(max_score_field.getText()), (int)(bot_difficulty_slider.getValue()));
         gameThread.start();
+        renderThread.start();
     }
 
     @FXML
