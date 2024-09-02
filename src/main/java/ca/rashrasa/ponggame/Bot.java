@@ -1,16 +1,20 @@
 package ca.rashrasa.ponggame;
 
+import javafx.scene.paint.Color;
+
 public class Bot extends GameElement {
     private final double WIDTH = 100.0;
     private final double HEIGHT = 15.0;
     private final double MOVE_SPEED = 200.0;
 
     private int moveDirection = 0;
+    private Color currentColor;
 
     private Vector position;
 
     public Bot(){
         this.position = new Vector(200,5);
+        this.currentColor = Color.WHITE;
     }
 
     @Override
@@ -37,5 +41,9 @@ public class Bot extends GameElement {
     }
     public double getHeight(){
         return this.HEIGHT;
+    }
+
+    public Color getCurrentColor() {
+        return this.currentColor;
     }
 }

@@ -1,5 +1,7 @@
 package ca.rashrasa.ponggame;
 
+import javafx.scene.paint.Color;
+
 public class User extends GameElement{
     private final double WIDTH = 100.0;
     private final double HEIGHT = 15.0;
@@ -9,8 +11,11 @@ public class User extends GameElement{
     private final double MOVE_SPEED = 200; //pixels per second
     private boolean isLeftPressed, isRightPressed;
 
+    private Color currentColor;
+
     public User(){
         this.x = 200;
+        this.currentColor = Color.WHITE;
     }
 
     public void tick(double ms){
@@ -49,5 +54,8 @@ public class User extends GameElement{
     }
     public double getHeight(){
         return this.HEIGHT;
+    }
+    public Color getCurrentColor(){
+        return this.currentColor;
     }
 }

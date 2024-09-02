@@ -59,11 +59,14 @@ public class GameScreenController {
 
         this.puck.setLayoutX(puckPosition.x());
         this.puck.setLayoutY(puckPosition.y());
+        this.puck.setFill(this.game.getPuckColor());
 
         this.user.setLayoutX(playerPosition.x());
         this.user.setLayoutY(playerPosition.y());
+        this.user.setFill(this.game.getUserColor());
 
         this.bot.setLayoutX(botPosition.x());
         this.bot.setLayoutY(botPosition.y());
+        this.bot.setFill(this.game.getBotColor());
     }
 }

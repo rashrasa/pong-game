@@ -1,5 +1,8 @@
 package ca.rashrasa.ponggame;
 
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
+
 import java.util.ArrayList;
 
 public class Game implements Runnable{
@@ -136,11 +139,11 @@ public class Game implements Runnable{
             e.tick(ms);
         }
     }
-    private double getLeftBoundary() {
+    public double getLeftBoundary() {
         return 0.0;
     }
 
-    private double getRightBoundary() {
+    public double getRightBoundary() {
         return 500.0;
     }
 
@@ -158,27 +161,36 @@ public class Game implements Runnable{
     public double getPuckRadius(){
         return this.puck.getRadius();
     }
+    public Color getPuckColor() {
+        return this.puck.getColor();
+    }
 
     // User info
     public Vector getUserPosition(){
         return this.user.getPosition();
     }
-    private double getUserWidth() {
+    public double getUserWidth() {
         return this.user.getWidth();
     }
-    private double getUserHeight() {
+    public double getUserHeight() {
         return this.user.getHeight();
+    }
+    public Color getUserColor(){
+        return this.user.getCurrentColor();
     }
 
     // Bot info
     public Vector getBotPosition(){
         return this.bot.getPosition();
     }
-    private double getBotWidth() {
+    public double getBotWidth() {
         return this.bot.getWidth();
     }
-    private double getBotHeight() {
+    public double getBotHeight() {
         return this.bot.getHeight();
+    }
+    public Color getBotColor(){
+        return this.bot.getCurrentColor();
     }
 
     public void leftPressed() {
