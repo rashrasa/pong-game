@@ -24,6 +24,11 @@ public class Puck extends GameElement{
         );
     }
 
+    @Override
+    void doCollisionAction(Direction collisionForceDirection) {
+        this.velocity = this.velocity.changeDirection(collisionForceDirection);
+    }
+
     public double getRadius() {
         return this.RADIUS;
     }

@@ -1,6 +1,9 @@
 package ca.rashrasa.ponggame;
 
 public class User extends GameElement{
+    private final double WIDTH = 100.0;
+    private final double HEIGHT = 15.0;
+
     private double x;
     private final double Y = 480;
     private final double MOVE_SPEED = 200; //pixels per second
@@ -20,6 +23,11 @@ public class User extends GameElement{
         }
     }
 
+    @Override
+    void doCollisionAction(Direction collisionForceDirection) {
+        // User and bot are immovable (Do nothing)
+    }
+
     public void leftPressed(){
         this.isLeftPressed = true;
     }
@@ -32,10 +40,14 @@ public class User extends GameElement{
     public void rightReleased() {
         this.isRightPressed = false;
     }
-    public double getX(){
-        return x;
+
+    public Vector getPosition() {
+        return new Vector(this.x, this.Y);
     }
-    public double getY(){
-        return Y;
+    public double getWidth(){
+        return this.WIDTH;
+    }
+    public double getHeight(){
+        return this.HEIGHT;
     }
 }

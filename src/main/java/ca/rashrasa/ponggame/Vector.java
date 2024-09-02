@@ -4,7 +4,7 @@ public class Vector {
     private double x;
     private double y;
 
-    /***
+    /**
     Immutable 2-tuple of double values intended to represent a single point in
     2D space.
      */
@@ -37,6 +37,15 @@ public class Vector {
         return new Vector(
                 this.x() * scalar,
                 this.y() * scalar
+        );
+    }
+
+    public Vector changeDirection(Direction newDirection){
+        Vector direction = newDirection.getVector();
+        double magnitude = this.magnitude();
+        return new Vector(
+                magnitude * direction.x(),
+                magnitude * direction.y()
         );
     }
 

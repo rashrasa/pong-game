@@ -31,7 +31,7 @@ public class Game implements Runnable{
         System.out.println("Bot Difficulty: "+bot_difficulty);
         this.user = new User();
         this.bot = new Bot();
-        this.puck = new Puck(new Vector(250,250), new Vector(150,-50));
+        this.puck = new Puck(new Vector(250,250), new Vector(0,150));
         this.gameElements.add(this.bot);
         this.gameElements.add(this.puck);
         this.gameElements.add(this.user);
@@ -53,6 +53,53 @@ public class Game implements Runnable{
     }
 
     private void tick(double ms){
+        // Collision detection
+        Vector puckCenter = getPuckPosition();
+        double puckRadius = getPuckRadius();
+
+        Vector puckTop = puckCenter.add(new Vector(0,-puckRadius));
+        Vector puckBottom = puckCenter.add(new Vector(0,puckRadius));
+
+        Vector userPositionTopLeft = getUserPosition();
+        double userWidth = getUserWidth();
+        double userHeight = getUserHeight();
+
+        double userCenterX = userPositionTopLeft.x()+userWidth/2.0;
+
+        Vector botPositionTopLeft = getBotPosition();
+        double botWidth = getBotWidth();
+        double botHeight = getBotHeight();
+
+        double botCenterX = botPositionTopLeft.x() + botWidth/2.0;
+
+        // Puck -> User
+        if(puckBottom.y() >= userPositionTopLeft.y()){
+            if(
+                    puckBottom.x() >= userPositionTopLeft.x() &&
+                    puckBottom.x() <= (userPositionTopLeft.x()+userWidth)
+            ){
+                // puck new angle goes from -pi to 0 when point of collision goes from left to right
+                double theta = -(Math.PI * (1 + (userPositionTopLeft.x()-puckBottom.x())/userWidth));
+                this.puck.doCollisionAction(new Direction(theta));
+                this.user.doCollisionAction(new Direction(theta + Math.PI));
+            }
+        }
+
+        // Puck -> Bot
+        if(puckTop.y() <= botPositionTopLeft.y()+botHeight){
+            if(
+                    puckTop.x() >= botPositionTopLeft.x() &&
+                            puckTop.x() <= (botPositionTopLeft.x()+botWidth)
+            ){
+                // puck new angle goes from -pi to 0 when point of collision goes from left to right
+                double theta = Math.PI * (1 + (userPositionTopLeft.x()-puckTop.x())/userWidth);
+                this.puck.doCollisionAction(new Direction(theta));
+                this.bot.doCollisionAction(new Direction(theta + Math.PI));
+            }
+        }
+        // Puck -> Left/Right boundaries
+
+        // Tick all game elements
         for(GameElement e: this.gameElements){
             e.tick(ms);
         }
@@ -72,12 +119,24 @@ public class Game implements Runnable{
 
     // User info
     public Vector getUserPosition(){
-        return new Vector(user.getX(), user.getY());
+        return this.user.getPosition();
+    }
+    private double getUserWidth() {
+        return this.user.getWidth();
+    }
+    private double getUserHeight() {
+        return this.user.getHeight();
     }
 
     // Bot info
     public Vector getBotPosition(){
         return this.bot.getPosition();
+    }
+    private double getBotWidth() {
+        return this.bot.getWidth();
+    }
+    private double getBotHeight() {
+        return this.bot.getHeight();
     }
 
     public void leftPressed() {
