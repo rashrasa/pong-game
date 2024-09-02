@@ -31,7 +31,7 @@ public class Game implements Runnable{
         System.out.println("Bot Difficulty: "+bot_difficulty);
         this.user = new User();
         this.bot = new Bot();
-        this.puck = new Puck(new Vector(250,250), new Vector(0,150));
+        this.puck = new Puck(new Vector(250,250), new Vector(0,250));
         this.gameElements.add(this.bot);
         this.gameElements.add(this.puck);
         this.gameElements.add(this.user);
@@ -89,8 +89,8 @@ public class Game implements Runnable{
                     puckTop.x() >= botPositionTopLeft.x() &&
                             puckTop.x() <= (botPositionTopLeft.x()+botWidth)
             ){
-                // puck new angle goes from -pi to 0 when point of collision goes from left to right
-                double theta = Math.PI * (1 + (userPositionTopLeft.x()-puckTop.x())/userWidth);
+                // puck new angle goes from pi to 0 when point of collision goes from left to right
+                double theta = Math.PI * (1 + (botPositionTopLeft.x()-puckTop.x())/botWidth);
                 this.puck.doCollisionAction(new Direction(theta));
                 this.bot.doCollisionAction(new Direction(theta + Math.PI));
             }
