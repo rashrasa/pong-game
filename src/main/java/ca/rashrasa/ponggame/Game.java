@@ -56,21 +56,19 @@ public class Game implements Runnable{
         // Collision detection
         Vector puckCenter = getPuckPosition();
         double puckRadius = getPuckRadius();
+        Vector puckVelocity = getPuckVelocity();
 
-        Vector puckTop = puckCenter.add(new Vector(0,-puckRadius));
-        Vector puckBottom = puckCenter.add(new Vector(0,puckRadius));
+        Vector puckTop = puckCenter.add(new Vector(0, -puckRadius));
+        Vector puckBottom = puckCenter.add(new Vector(0, puckRadius));
+        Vector puckLeft = puckCenter.add(new Vector(-puckRadius, 0));
+        Vector puckRight = puckCenter.add(new Vector(puckRadius, 0));
 
         Vector userPositionTopLeft = getUserPosition();
         double userWidth = getUserWidth();
-        double userHeight = getUserHeight();
-
-        double userCenterX = userPositionTopLeft.x()+userWidth/2.0;
 
         Vector botPositionTopLeft = getBotPosition();
         double botWidth = getBotWidth();
         double botHeight = getBotHeight();
-
-        double botCenterX = botPositionTopLeft.x() + botWidth/2.0;
 
         // Puck -> User
         if(puckBottom.y() >= userPositionTopLeft.y()){
@@ -98,11 +96,39 @@ public class Game implements Runnable{
             }
         }
         // Puck -> Left/Right boundaries
+        if(puckLeft.x() <= getLeftBoundary()){
+            this.puck.doCollisionAction(
+                    new Direction(
+                            new Vector(
+                                    puckVelocity.x()*-1,
+                                    puckVelocity.y()
+                            )
+                    )
+            );
+        }
+
+        if(puckRight.x() >= getRightBoundary()){
+            this.puck.doCollisionAction(
+                    new Direction(
+                            new Vector(
+                                    puckVelocity.x()*-1,
+                                    puckVelocity.y()
+                            )
+                    )
+            );
+        }
 
         // Tick all game elements
         for(GameElement e: this.gameElements){
             e.tick(ms);
         }
+    }
+    private double getLeftBoundary() {
+        return 0.0;
+    }
+
+    private double getRightBoundary() {
+        return 500.0;
     }
 
     public void stop(){
@@ -112,6 +138,9 @@ public class Game implements Runnable{
     // Puck info
     public Vector getPuckPosition(){
         return this.puck.getPosition();
+    }
+    public Vector getPuckVelocity(){
+        return this.puck.getVelocity();
     }
     public double getPuckRadius(){
         return this.puck.getRadius();
