@@ -35,7 +35,7 @@ public class Game implements Runnable{
         System.out.println("Max Score: "+max_score);
         System.out.println("Bot Difficulty: "+bot_difficulty);
         this.user = new User();
-        this.bot = new Bot();
+        this.bot = new Bot(bot_difficulty);
         this.puck = new Puck(new Vector(250,250), new Vector(0,250));
         this.pauseTimer = 3.0;
         this.gameElements.add(this.bot);
@@ -70,7 +70,7 @@ public class Game implements Runnable{
         if (gameEnded){
             this.stop();
         }
-        else if(playerScore > this.maxScore || botScore > this.maxScore ){
+        else if(playerScore >= this.maxScore || botScore >= this.maxScore ){
             this.endGame();
         }
 
@@ -86,12 +86,14 @@ public class Game implements Runnable{
 
         Vector puckCenter = getPuckPosition();
         double puckRadius = getPuckRadius();
-        Vector puckVelocity = getPuckVelocity();
 
         Vector puckTop = puckCenter.add(new Vector(0, -puckRadius));
         Vector puckBottom = puckCenter.add(new Vector(0, puckRadius));
-        Vector puckLeft = puckCenter.add(new Vector(-puckRadius, 0));
-        Vector puckRight = puckCenter.add(new Vector(puckRadius, 0));
+
+        Vector botPositionTopLeft = getBotPosition();
+        double botWidth = getBotWidth();
+        double botHeight = getBotHeight();
+        Vector botCenter = botPositionTopLeft.add(new Vector(botWidth/2.0, botHeight/2.0));
 
         //Out of bounds detection
         if(puckTop.y() < getTopBoundary()){
@@ -101,7 +103,35 @@ public class Game implements Runnable{
             botWinsRound();
         }
 
-        // Collision detection
+        doCollisionActions();
+
+        // Set bot direction - tracks puck
+        if(botCenter.x()<puckCenter.x()){
+            this.bot.setMoveDirection(1);
+        }
+        else if(botCenter.x()>puckCenter.x()){
+            this.bot.setMoveDirection(-1);
+        }
+        else{
+            this.bot.setMoveDirection(0);
+        }
+
+        // Tick all game elements
+        for(GameElement e: this.gameElements){
+            e.tick(ms);
+        }
+    }
+
+    private void doCollisionActions() {
+        Vector puckCenter = getPuckPosition();
+        double puckRadius = getPuckRadius();
+        Vector puckVelocity = getPuckVelocity();
+
+        Vector puckTop = puckCenter.add(new Vector(0, -puckRadius));
+        Vector puckBottom = puckCenter.add(new Vector(0, puckRadius));
+        Vector puckLeft = puckCenter.add(new Vector(-puckRadius, 0));
+        Vector puckRight = puckCenter.add(new Vector(puckRadius, 0));
+
         Vector userPositionTopLeft = getUserPosition();
         double userWidth = getUserWidth();
         double userHeight = getUserHeight();
@@ -109,13 +139,13 @@ public class Game implements Runnable{
         Vector botPositionTopLeft = getBotPosition();
         double botWidth = getBotWidth();
         double botHeight = getBotHeight();
-        Vector botCenter = botPositionTopLeft.add(new Vector(botWidth/2.0, botHeight/2.0));
+
 
         // Puck -> User
         if(puckBottom.y() >= userPositionTopLeft.y() && puckBottom.y() <= userPositionTopLeft.y()+userHeight){
             if(
                     puckBottom.x() >= userPositionTopLeft.x() &&
-                    puckBottom.x() <= (userPositionTopLeft.x()+userWidth)
+                            puckBottom.x() <= (userPositionTopLeft.x()+userWidth)
             ){
                 // puck new angle goes from -5pi/6 to -pi/6 when point of collision goes from left to right
                 double theta = -((4.0/6.0 * Math.PI * (1 + (userPositionTopLeft.x()-puckBottom.x())/userWidth))+Math.PI/6.0);
@@ -157,22 +187,6 @@ public class Game implements Runnable{
                             )
                     )
             );
-        }
-
-        // Set bot direction - tracks puck
-        if(botCenter.x()<puckCenter.x()){
-            this.bot.setMoveDirection(1);
-        }
-        else if(botCenter.x()>puckCenter.x()){
-            this.bot.setMoveDirection(-1);
-        }
-        else{
-            this.bot.setMoveDirection(0);
-        }
-
-        // Tick all game elements
-        for(GameElement e: this.gameElements){
-            e.tick(ms);
         }
     }
 

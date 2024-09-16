@@ -6,17 +6,18 @@ public class Bot extends GameElement {
     private final Vector START_POSITION;
     private final double WIDTH = 100.0;
     private final double HEIGHT = 15.0;
-    private final double MOVE_SPEED = 75.0;
+    private final double MOVE_SPEED;
 
     private int moveDirection = 0;
     private Color currentColor;
 
     private Vector position;
 
-    public Bot(){
+    public Bot(int difficulty){
         this.position = new Vector(200,5);
         this.currentColor = Color.WHITE;
         this.START_POSITION = new Vector(200,5);
+        this.MOVE_SPEED = 150.0 * (difficulty/4.0);
     }
 
     @Override
