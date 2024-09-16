@@ -3,9 +3,10 @@ package ca.rashrasa.ponggame;
 import javafx.scene.paint.Color;
 
 public class Bot extends GameElement {
+    private final Vector START_POSITION;
     private final double WIDTH = 100.0;
     private final double HEIGHT = 15.0;
-    private final double MOVE_SPEED = 200.0;
+    private final double MOVE_SPEED = 75.0;
 
     private int moveDirection = 0;
     private Color currentColor;
@@ -15,6 +16,7 @@ public class Bot extends GameElement {
     public Bot(){
         this.position = new Vector(200,5);
         this.currentColor = Color.WHITE;
+        this.START_POSITION = new Vector(200,5);
     }
 
     @Override
@@ -26,6 +28,21 @@ public class Bot extends GameElement {
     @Override
     void doCollisionAction(Direction collisionForceDirection) {
         // User and bot are immovable (Do nothing)
+    }
+
+    @Override
+    public Vector getStartPosition() {
+        return this.START_POSITION;
+    }
+
+    @Override
+    public void setPosition(Vector v0) {
+        this.position = new Vector(v0.x(), this.position.y());
+    }
+
+    @Override
+    public void reset() {
+        this.position = START_POSITION;
     }
 
     public Vector getPosition() {

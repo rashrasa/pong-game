@@ -1,32 +1,25 @@
 package ca.rashrasa.ponggame;
 
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
-import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.paint.Color;
-import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class GameDisplay extends Application {
+public class Display extends Application {
     private Stage stage;
     private Scene mainScene;
-    private FXMLLoader mainMenu=new FXMLLoader(GameDisplay.class.getResource("main-menu.fxml"));
-    private FXMLLoader preGameMenu=new FXMLLoader(GameDisplay.class.getResource("pre-game-menu.fxml"));
-    private FXMLLoader gameScreen=new FXMLLoader(GameDisplay.class.getResource("game-screen.fxml"));
+    private FXMLLoader mainMenu=new FXMLLoader(Display.class.getResource("main-menu.fxml"));
+    private FXMLLoader preGameMenu=new FXMLLoader(Display.class.getResource("pre-game-menu.fxml"));
+    private FXMLLoader gameScreen=new FXMLLoader(Display.class.getResource("game-screen.fxml"));
     private Game game = new Game();
     private Thread gameThread = new Thread(game);
     private Thread renderThread;
@@ -54,7 +47,6 @@ public class GameDisplay extends Application {
 
     @FXML
     protected void onStartPress(ActionEvent e) throws IOException {
-
         AnchorPane root = gameScreen.load();
         GameScreenController controller = gameScreen.getController();
         controller.setGame(this.game);

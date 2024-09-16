@@ -17,14 +17,16 @@ public class ViewRenderThread implements Runnable{
         double renderPeriod = 1000.0/FRAME_RATE;
         long updates = 0;
         while(this.game.isRunning()){
-            if(this.game.isRoundStarted()){
-                if((System.nanoTime()-startTime)/(renderPeriod*1000000) > updates){
-                    Platform.runLater(() -> {
-                        controller.update();
-                    });
-                    updates++;
-                }
+            if(game.hasEnded()){
+                break;
+            }
+            if((System.nanoTime()-startTime)/(renderPeriod*1000000) > updates){
+                Platform.runLater(() -> {
+                    controller.update();
+                });
+                updates++;
             }
         }
+        this.controller.displayGameEndScreen();
     }
 }

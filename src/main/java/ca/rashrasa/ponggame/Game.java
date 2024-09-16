@@ -1,8 +1,6 @@
 package ca.rashrasa.ponggame;
 
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
-
 import java.util.ArrayList;
 
 public class Game implements Runnable{
@@ -14,6 +12,9 @@ public class Game implements Runnable{
     private Bot bot;
     public final int TICK_RATE = 60;
     private final ArrayList<GameElement> gameElements;
+    private double pauseTimer;
+    private int botScore, playerScore, maxScore;
+    private boolean gameEnded;
 
     /**
      Stores game information and contains its execution.
@@ -27,6 +28,7 @@ public class Game implements Runnable{
         this.running=true;
         this.gameElements = new ArrayList<>();
         this.roundStarted=false;
+        this.gameEnded = false;
     }
 
     public void startGame(int max_score, int bot_difficulty){
@@ -35,10 +37,14 @@ public class Game implements Runnable{
         this.user = new User();
         this.bot = new Bot();
         this.puck = new Puck(new Vector(250,250), new Vector(0,250));
+        this.pauseTimer = 3.0;
         this.gameElements.add(this.bot);
         this.gameElements.add(this.puck);
         this.gameElements.add(this.user);
-        this.roundStarted = true;
+
+        this.botScore = 0;
+        this.playerScore = 0;
+        this.maxScore = max_score;
     }
     public void run() {
         long startTime = System.nanoTime();
@@ -46,17 +52,38 @@ public class Game implements Runnable{
         long updates = 0;
         while(running){
             if((System.nanoTime()-startTime)/(tickPeriod*1000000) > updates){
-                if(roundStarted){
-                    this.tick(tickPeriod);
-                }
+                this.tick(tickPeriod);
                 updates++;
             }
 
         }
     }
 
+    private void resetRound(){
+        this.pauseTimer = 3.0;
+        for (GameElement e: this.gameElements){
+            e.reset();
+        }
+    }
+
     private void tick(double ms){
-        // Collision detection
+        if (gameEnded){
+            this.stop();
+        }
+        else if(playerScore > this.maxScore || botScore > this.maxScore ){
+            this.endGame();
+        }
+
+        else if (this.pauseTimer>0){
+            this.user.disableControls();
+            this.pauseTimer-=ms/1000.0;
+            return;
+        }
+        else if(!this.roundStarted){
+            this.roundStarted = true;
+            this.user.enableControls();
+        }
+
         Vector puckCenter = getPuckPosition();
         double puckRadius = getPuckRadius();
         Vector puckVelocity = getPuckVelocity();
@@ -66,6 +93,15 @@ public class Game implements Runnable{
         Vector puckLeft = puckCenter.add(new Vector(-puckRadius, 0));
         Vector puckRight = puckCenter.add(new Vector(puckRadius, 0));
 
+        //Out of bounds detection
+        if(puckTop.y() < getTopBoundary()){
+            playerWinsRound();
+        }
+        else if(puckBottom.y()>getBottomBoundary()){
+            botWinsRound();
+        }
+
+        // Collision detection
         Vector userPositionTopLeft = getUserPosition();
         double userWidth = getUserWidth();
         double userHeight = getUserHeight();
@@ -139,11 +175,38 @@ public class Game implements Runnable{
             e.tick(ms);
         }
     }
+
+    private void endGame() {
+        this.pauseTimer = 5;
+        this.resetRound();
+        this.gameEnded = true;
+    }
+
+    private void playerWinsRound(){
+        this.resetRound();
+        this.playerScore++;
+        this.roundStarted = false;
+    }
+
+    private void botWinsRound(){
+        this.resetRound();
+        this.botScore++;
+        this.roundStarted = false;
+    }
+
     public double getLeftBoundary() {
         return 0.0;
     }
 
     public double getRightBoundary() {
+        return 500.0;
+    }
+
+    public double getTopBoundary() {
+        return 0.0;
+    }
+
+    public double getBottomBoundary() {
         return 500.0;
     }
 
@@ -212,5 +275,21 @@ public class Game implements Runnable{
 
     public boolean isRunning(){
         return this.running;
+    }
+
+    public boolean hasEnded(){
+        return this.gameEnded;
+    }
+
+    public int getUserScore() {
+        return this.playerScore;
+    }
+
+    public int getBotScore() {
+        return this.botScore;
+    }
+
+    public double getPauseTimer() {
+        return this.pauseTimer;
     }
 }

@@ -3,34 +3,52 @@ package ca.rashrasa.ponggame;
 import javafx.scene.paint.Color;
 
 public class User extends GameElement{
+    private final Vector START_POSITION;
     private final double WIDTH = 100.0;
     private final double HEIGHT = 15.0;
 
-    private double x;
-    private final double Y = 480;
+    private Vector position;
     private final double MOVE_SPEED = 200; //pixels per second
-    private boolean isLeftPressed, isRightPressed;
+    private boolean isLeftPressed, isRightPressed, hasControl;
 
     private Color currentColor;
 
     public User(){
-        this.x = 200;
+        this.position = new Vector(200, 480);
+        this.START_POSITION = this.position;
         this.currentColor = Color.WHITE;
+        this.hasControl = false;
     }
 
     public void tick(double ms){
         double seconds = ms/1000.0;
-        if(isLeftPressed){
-            this.x = x - MOVE_SPEED*seconds;
+        if(isLeftPressed && hasControl){
+            this.position = this.position.translateEnd(-MOVE_SPEED*seconds, 0);
         }
-        if(isRightPressed){
-            this.x = x + MOVE_SPEED*seconds;
+        if(isRightPressed && hasControl){
+            this.position = this.position.translateEnd(MOVE_SPEED*seconds, 0);
         }
     }
 
     @Override
     void doCollisionAction(Direction collisionForceDirection) {
         // User and bot are immovable (Do nothing)
+    }
+
+    @Override
+    Vector getStartPosition() {
+        return this.START_POSITION;
+    }
+
+    @Override
+    void setPosition(Vector v0) {
+        //User and bot should have constant y
+        this.position = new Vector(v0.x(), position.y());
+    }
+
+    @Override
+    public void reset() {
+        this.position = START_POSITION;
     }
 
     public void leftPressed(){
@@ -47,7 +65,7 @@ public class User extends GameElement{
     }
 
     public Vector getPosition() {
-        return new Vector(this.x, this.Y);
+        return new Vector(this.position);
     }
     public double getWidth(){
         return this.WIDTH;
@@ -57,5 +75,13 @@ public class User extends GameElement{
     }
     public Color getCurrentColor(){
         return this.currentColor;
+    }
+
+    public void disableControls() {
+        this.hasControl = false;
+    }
+
+    public void enableControls(){
+        this.hasControl = true;
     }
 }

@@ -49,6 +49,10 @@ public class Vector {
         );
     }
 
+    public Vector translateEnd(double x_dist, double y_dist){
+        return new Vector(this.x + x_dist, this.y + y_dist);
+    }
+
     public double magnitude(){
         return Math.sqrt(
                 this.x()*this.x() + this.y() * this.y()
