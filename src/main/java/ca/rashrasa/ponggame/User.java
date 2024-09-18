@@ -36,17 +36,6 @@ public class User extends GameElement{
     }
 
     @Override
-    Vector getStartPosition() {
-        return this.START_POSITION;
-    }
-
-    @Override
-    void setPosition(Vector v0) {
-        //User and bot should have constant y
-        this.position = new Vector(v0.x(), position.y());
-    }
-
-    @Override
     public void reset() {
         this.position = START_POSITION;
     }

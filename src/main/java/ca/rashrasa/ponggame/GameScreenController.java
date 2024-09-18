@@ -1,15 +1,23 @@
 package ca.rashrasa.ponggame;
 
+import javafx.animation.FadeTransition;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 public class GameScreenController {
+    private ActionEvent restartEvent = null;
     private Game game;
+
     @FXML
     Circle puck;
 
@@ -20,10 +28,13 @@ public class GameScreenController {
     Rectangle bot;
 
     @FXML
-    Text user_score_label1, bot_score_label1, pause_timer;
+    Text user_score_label1, bot_score_label1, pause_timer, winning_score_label;
 
     @FXML
     AnchorPane root, game_root;
+
+    private Text endMessage;
+    private Button restartButton;
 
     public void setGame(Game game){
         this.game = game;
@@ -60,6 +71,10 @@ public class GameScreenController {
     }
 
     public void update(){
+        if(this.game == null){
+            return;
+        }
+
         Vector puckPosition = this.game.getPuckPosition();
         Vector playerPosition = this.game.getUserPosition();
         Vector botPosition = this.game.getBotPosition();
@@ -80,22 +95,66 @@ public class GameScreenController {
         this.user_score_label1.setText(String.valueOf(this.game.getUserScore()));
         this.bot_score_label1.setText(String.valueOf(this.game.getBotScore()));
 
-        this.pause_timer.setVisible(game.getPauseTimer() > 0.0);
+        this.pause_timer.setVisible(!game.hasEnded() && game.getPauseTimer() > 0.0);
         this.pause_timer.setText(
                 String.valueOf(
                         Math.round(game.getPauseTimer()*100.0)/100.0
                 )
         );
 
+        this.winning_score_label.setText(String.valueOf(this.game.getWinningScore()));
     }
 
     public void displayGameEndScreen() {
-        this.game_root.getChildren().removeAll();
-        String winner = this.game.getUserScore() > this.game.getBotScore() ? "Player" : "User";
-        Text endMessage = new Text(winner + " wins!");
-        endMessage.setLayoutX(game_root.getWidth()/2.0);
-        endMessage.setLayoutY(game_root.getHeight()/2.0);
-        this.game_root.getChildren().add(endMessage);
-        game_root.getId();
+        this.bot.setVisible(false);
+        this.user.setVisible(false);
+        this.puck.setVisible(false);
+        this.pause_timer.setVisible(false);
+        String winner = this.game.getUserScore() > this.game.getBotScore() ? "Player" : "Bot";
+
+        //End message
+        this.endMessage = new Text(winner + " wins.");
+        endMessage.setLayoutX(game_root.getWidth()/2.0 - 45);
+        endMessage.setLayoutY(game_root.getHeight()/2.0 - 15);
+        endMessage.setFill(Color.WHITE);
+        endMessage.setFont(Font.font("Century Gothic"));
+        endMessage.setStyle("-fx-font-size: x-large; -fx-font-weight: bold");
+
+        //Restart button
+        this.restartButton = new Button("Restart");
+        restartButton.setVisible(true);
+        restartButton.setLayoutX(game_root.getWidth()/2.0 - 25);
+        restartButton.setLayoutY(game_root.getWidth()/2.0 + 15);
+        restartButton.setOpacity(0);
+        restartButton.addEventHandler(ActionEvent.ACTION, this::onRestartPress);
+
+        FadeTransition restartTransition = new FadeTransition(Duration.seconds(1));
+        restartTransition.setNode(restartButton);
+        restartTransition.setDelay(Duration.seconds(2.0));
+        restartTransition.setFromValue(0.0);
+        restartTransition.setToValue(1.0);
+        this.game_root.getChildren().addAll(endMessage, restartButton);
+        restartTransition.play();
+    }
+
+    private void onRestartPress(ActionEvent e){
+        this.restartEvent = e;
+    }
+
+    public ActionEvent getRestartEvent() {
+        return this.restartEvent;
+    }
+
+    public void reset(){
+        this.restartEvent = null;
+        this.game = null;
+        this.user_score_label1.setText("0");
+        this.bot_score_label1.setText("0");
+        this.endMessage.setVisible(false);
+        this.restartButton.setVisible(false);
+        this.user.setVisible(true);
+        this.puck.setVisible(true);
+        this.bot.setVisible(true);
+        this.pause_timer.setVisible(true);
     }
 }

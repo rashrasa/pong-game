@@ -5,9 +5,5 @@ public abstract class GameElement {
 
     abstract void doCollisionAction(Direction collisionForceDirection);
 
-    abstract Vector getStartPosition();
-
-    abstract void setPosition(Vector v0);
-
     abstract void reset();
 }

@@ -4,8 +4,7 @@ import javafx.scene.paint.Color;
 import java.util.ArrayList;
 
 public class Game implements Runnable{
-    private volatile boolean running;
-    private volatile boolean roundStarted;
+    private volatile boolean gameOpen, running, roundStarted;
 
     private Puck puck;
     private User user;
@@ -25,9 +24,10 @@ public class Game implements Runnable{
      3. Objects that are ticked calculate their new positions, velocities, and any interactions with other objects
      */
     public Game(){
-        this.running=true;
+        this.running = true;
+        this.gameOpen = true;
         this.gameElements = new ArrayList<>();
-        this.roundStarted=false;
+        this.roundStarted = false;
         this.gameEnded = false;
     }
 
@@ -50,9 +50,11 @@ public class Game implements Runnable{
         long startTime = System.nanoTime();
         double tickPeriod = 1000.0/TICK_RATE;
         long updates = 0;
-        while(running){
+        while(this.gameOpen){
             if((System.nanoTime()-startTime)/(tickPeriod*1000000) > updates){
-                this.tick(tickPeriod);
+                if(running){
+                    this.tick(tickPeriod);
+                }
                 updates++;
             }
 
@@ -60,7 +62,7 @@ public class Game implements Runnable{
     }
 
     private void resetRound(){
-        this.pauseTimer = 3.0;
+        this.pauseTimer = 1.0;
         for (GameElement e: this.gameElements){
             e.reset();
         }
@@ -291,6 +293,10 @@ public class Game implements Runnable{
         return this.running;
     }
 
+    public boolean isOpen(){
+        return this.gameOpen;
+    }
+
     public boolean hasEnded(){
         return this.gameEnded;
     }
@@ -305,5 +311,13 @@ public class Game implements Runnable{
 
     public double getPauseTimer() {
         return this.pauseTimer;
+    }
+
+    public int getWinningScore() {
+        return this.maxScore;
+    }
+
+    public void close() {
+        this.gameOpen = false;
     }
 }

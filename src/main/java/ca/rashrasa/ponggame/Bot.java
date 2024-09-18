@@ -17,7 +17,7 @@ public class Bot extends GameElement {
         this.position = new Vector(200,5);
         this.currentColor = Color.WHITE;
         this.START_POSITION = new Vector(200,5);
-        this.MOVE_SPEED = 150.0 * (difficulty/4.0);
+        this.MOVE_SPEED = 175.0 * (difficulty/4.0);
     }
 
     @Override
@@ -29,16 +29,6 @@ public class Bot extends GameElement {
     @Override
     void doCollisionAction(Direction collisionForceDirection) {
         // User and bot are immovable (Do nothing)
-    }
-
-    @Override
-    public Vector getStartPosition() {
-        return this.START_POSITION;
-    }
-
-    @Override
-    public void setPosition(Vector v0) {
-        this.position = new Vector(v0.x(), this.position.y());
     }
 
     @Override

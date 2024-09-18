@@ -42,16 +42,6 @@ public class Puck extends GameElement{
     }
 
     @Override
-    public Vector getStartPosition() {
-        return this.START_POSITION;
-    }
-
-    @Override
-    public void setPosition(Vector v0) {
-        this.position = v0;
-    }
-
-    @Override
     public void reset() {
         this.position = START_POSITION;
         this.velocity = START_VELOCITY;

@@ -71,7 +71,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>ca.rashrasa.ponggame/ca.rashrasa.ponggame.Display</mainClass>
+                            <mainClass>ca.rashrasa.ponggame/ca.rashrasa.ponggame.FXApplication</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
