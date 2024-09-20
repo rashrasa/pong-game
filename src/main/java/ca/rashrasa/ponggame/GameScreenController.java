@@ -4,10 +4,17 @@ import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.Bloom;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.Glow;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.CycleMethod;
+import javafx.scene.paint.RadialGradient;
+import javafx.scene.paint.Stop;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Font;
@@ -19,7 +26,7 @@ public class GameScreenController {
     private Game game;
 
     @FXML
-    Circle puck;
+    Circle puck, puck_light;
 
     @FXML
     Rectangle user;
@@ -82,7 +89,22 @@ public class GameScreenController {
         this.puck.setLayoutX(puckPosition.x());
         this.puck.setLayoutY(puckPosition.y());
         this.puck.setFill(this.game.getPuckColor());
+        this.puck.setStroke(game.getPuckColor().desaturate());
 
+        this.puck_light.setLayoutX(puckPosition.x());
+        this.puck_light.setLayoutY(puckPosition.y());
+
+        Stop[] stops = new Stop[] {
+                new Stop(0.0, game.getPuckColor().darker().darker()),
+                new Stop(1.0, Color.BLACK)
+        };
+
+        this.puck_light.setFill(
+                new RadialGradient(
+                        0, 0, 0.5, 0.5, 0.5,
+                        true,
+                        CycleMethod.NO_CYCLE,
+                        stops));
 
         this.user.setLayoutX(playerPosition.x());
         this.user.setLayoutY(playerPosition.y());
@@ -154,7 +176,9 @@ public class GameScreenController {
         this.restartButton.setVisible(false);
         this.user.setVisible(true);
         this.puck.setVisible(true);
+        this.puck.setFill(Color.WHITE);
         this.bot.setVisible(true);
         this.pause_timer.setVisible(true);
     }
+
 }

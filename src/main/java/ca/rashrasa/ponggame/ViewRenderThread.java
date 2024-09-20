@@ -2,8 +2,6 @@ package ca.rashrasa.ponggame;
 
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
-import javafx.scene.Node;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 

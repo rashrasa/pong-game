@@ -2,6 +2,9 @@
 
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.paint.RadialGradient?>
+<?import javafx.scene.paint.Stop?>
 <?import javafx.scene.shape.Circle?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
@@ -46,9 +49,43 @@
       </Text>
       <AnchorPane fx:id="game_root" layoutX="50.0" layoutY="86.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" style="-fx-background-color: black;">
          <children>
+            <Circle fx:id="puck_light" blendMode="LIGHTEN" layoutX="250.0" layoutY="250.0" radius="700.0" smooth="false" strokeType="INSIDE" strokeWidth="0.0">
+               <stroke>
+                  <RadialGradient centerX="0.5" centerY="0.5" radius="0.5">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </stroke>
+               <fill>
+                  <RadialGradient centerX="0.5137741046831956" centerY="0.5" focusAngle="-109.23" focusDistance="0.011428571428571344" radius="0.5114285714285715">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </RadialGradient>
+               </fill>
+            </Circle>
             <Rectangle fx:id="user" fill="WHITE" height="15.0" layoutX="200.0" layoutY="480.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="100.0" />
             <Rectangle fx:id="bot" fill="WHITE" height="15.0" layoutX="200.0" layoutY="5.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="100.0" />
-            <Circle fx:id="puck" fill="WHITE" layoutX="250.0" layoutY="250.0" radius="20.0" smooth="false" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
+            <Circle fx:id="puck" fill="WHITE" layoutX="250.0" layoutY="250.0" radius="20.0" smooth="false" stroke="#d0d0d0" strokeType="INSIDE" strokeWidth="3.0" />
             <Text fx:id="pause_timer" fill="WHITE" layoutX="212.0" layoutY="147.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0.00">
                <font>
                   <Font name="Century Gothic Bold" size="39.0" />

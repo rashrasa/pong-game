@@ -142,7 +142,15 @@ public class Game implements Runnable{
         double botWidth = getBotWidth();
         double botHeight = getBotHeight();
 
-
+        /*
+            New collision changes:
+                1. Check y distance from puck bottom to user top
+                2. Check x distance from puck right to left user edge
+                   if puck on the left of left edge, else check puck left to user right
+                3. Distance less than radius means collision
+                These cover all potential collisions
+        */
+        double theta;
         // Puck -> User
         if(puckBottom.y() >= userPositionTopLeft.y() && puckBottom.y() <= userPositionTopLeft.y()+userHeight){
             if(
@@ -150,7 +158,7 @@ public class Game implements Runnable{
                             puckBottom.x() <= (userPositionTopLeft.x()+userWidth)
             ){
                 // puck new angle goes from -5pi/6 to -pi/6 when point of collision goes from left to right
-                double theta = -((4.0/6.0 * Math.PI * (1 + (userPositionTopLeft.x()-puckBottom.x())/userWidth))+Math.PI/6.0);
+                theta = -((4.0/6.0 * Math.PI * (1 + (userPositionTopLeft.x()-puckBottom.x())/userWidth))+Math.PI/6.0);
                 this.puck.doCollisionAction(new Direction(theta));
                 this.user.doCollisionAction(new Direction(theta + Math.PI));
             }
@@ -163,7 +171,7 @@ public class Game implements Runnable{
                             puckTop.x() <= (botPositionTopLeft.x()+botWidth)
             ){
                 // puck new angle goes from 5pi/6 to pi/6 when point of collision goes from left to right
-                double theta = (4.0/6.0 * Math.PI * (1 + (botPositionTopLeft.x()-puckTop.x())/botWidth))+Math.PI/6.0;
+                theta = (4.0/6.0 * Math.PI * (1 + (botPositionTopLeft.x()-puckTop.x())/botWidth))+Math.PI/6.0;
                 this.puck.doCollisionAction(new Direction(theta));
                 this.bot.doCollisionAction(new Direction(theta + Math.PI));
             }

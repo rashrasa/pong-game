@@ -29,9 +29,12 @@ public class User extends GameElement{
             this.position = this.position.translateEnd(MOVE_SPEED*seconds, 0);
         }
     }
+    void doCollisionAction(Direction collisionForceDirection) {
+        doCollisionAction(collisionForceDirection,1.0);
+    }
 
     @Override
-    void doCollisionAction(Direction collisionForceDirection) {
+    void doCollisionAction(Direction collisionForceDirection, double ratio) {
         // User and bot are immovable (Do nothing)
     }
 

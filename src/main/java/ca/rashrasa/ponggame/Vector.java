@@ -58,4 +58,8 @@ public class Vector {
                 this.x()*this.x() + this.y() * this.y()
         );
     }
+
+    public double distanceTo(Vector v0){
+        return Math.sqrt( Math.pow(this.x()-v0.x(),2) + Math.pow(this.y()-v0.y(),2) );
+    }
 }

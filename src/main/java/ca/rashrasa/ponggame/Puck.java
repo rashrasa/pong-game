@@ -31,20 +31,24 @@ public class Puck extends GameElement{
                 this.velocity.scalarProduct(ms/1000.0)
         );
     }
+    public void doCollisionAction(Direction collisionForceDirection) {
+        this.doCollisionAction(collisionForceDirection, 1.0);
+    }
 
     @Override
-    public void doCollisionAction(Direction collisionForceDirection) {
-        this.velocity = this.velocity.changeDirection(collisionForceDirection);
+    public void doCollisionAction(Direction collisionForceDirection, double ratio) {
+        this.velocity = this.velocity.changeDirection(collisionForceDirection).scalarProduct(ratio);
         this.currentColor = Color.rgb(
                 (int)(Math.random()*256),
                 (int)(Math.random()*256),
-                (int)(Math.random()*256));
+                (int)(Math.random()*256)).brighter();
     }
 
     @Override
     public void reset() {
         this.position = START_POSITION;
         this.velocity = START_VELOCITY;
+        this.currentColor = Color.WHITE;
     }
 
     public double getRadius() {
@@ -54,4 +58,5 @@ public class Puck extends GameElement{
     public Color getColor() {
         return this.currentColor;
     }
+
 }

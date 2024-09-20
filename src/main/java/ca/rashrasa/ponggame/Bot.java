@@ -26,8 +26,12 @@ public class Bot extends GameElement {
         this.position = this.position.add(new Vector(moveDirection*MOVE_SPEED*seconds, 0));
     }
 
-    @Override
     void doCollisionAction(Direction collisionForceDirection) {
+        doCollisionAction(collisionForceDirection,1.0);
+    }
+
+    @Override
+    void doCollisionAction(Direction collisionForceDirection, double ratio) {
         // User and bot are immovable (Do nothing)
     }
 
