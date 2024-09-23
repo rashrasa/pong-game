@@ -19,4 +19,8 @@ public class Direction {
     public Vector getVector(){
         return new Vector(this.direction);
     }
+
+    public double getTheta(){
+        return Math.atan2(direction.y(), direction.x());
+    }
 }

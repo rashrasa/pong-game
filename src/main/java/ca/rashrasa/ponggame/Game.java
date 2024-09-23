@@ -150,31 +150,58 @@ public class Game implements Runnable{
                 3. Distance less than radius means collision
                 These cover all potential collisions
         */
-        double theta;
+        Vector collisionTest=puckCenter;
+        double theta = new Direction(puck.getVelocity()).getTheta();
         // Puck -> User
-        if(puckBottom.y() >= userPositionTopLeft.y() && puckBottom.y() <= userPositionTopLeft.y()+userHeight){
-            if(
-                    puckBottom.x() >= userPositionTopLeft.x() &&
-                            puckBottom.x() <= (userPositionTopLeft.x()+userWidth)
-            ){
-                // puck new angle goes from -5pi/6 to -pi/6 when point of collision goes from left to right
-                theta = -((4.0/6.0 * Math.PI * (1 + (userPositionTopLeft.x()-puckBottom.x())/userWidth))+Math.PI/6.0);
-                this.puck.doCollisionAction(new Direction(theta));
-                this.user.doCollisionAction(new Direction(theta + Math.PI));
-            }
+        if(puckCenter.x()<=userPositionTopLeft.x()){
+            collisionTest=new Vector(userPositionTopLeft.x(),collisionTest.y());
+            theta = 5.0/6.0*Math.PI;
+        }
+        else if(puckCenter.x()>userPositionTopLeft.x()+userWidth){
+            collisionTest=new Vector(userPositionTopLeft.x()+userWidth,collisionTest.y());
+            theta = 1.0/6.0*Math.PI;
         }
 
-        // Puck -> Bot
-        if(puckTop.y() <= botPositionTopLeft.y()+botHeight && puckTop.y() >= botPositionTopLeft.y()){
-            if(
-                    puckTop.x() >= botPositionTopLeft.x() &&
-                            puckTop.x() <= (botPositionTopLeft.x()+botWidth)
-            ){
-                // puck new angle goes from 5pi/6 to pi/6 when point of collision goes from left to right
-                theta = (4.0/6.0 * Math.PI * (1 + (botPositionTopLeft.x()-puckTop.x())/botWidth))+Math.PI/6.0;
-                this.puck.doCollisionAction(new Direction(theta));
-                this.bot.doCollisionAction(new Direction(theta + Math.PI));
-            }
+        if(puckCenter.y()<=userPositionTopLeft.y()){
+            collisionTest=new Vector(collisionTest.x(), userPositionTopLeft.y());
+            // -PI/6 to -5PI/6
+            //@userleft to userleft+width
+            theta = (userWidth-(puckCenter.x()-userPositionTopLeft.x())/userWidth)*(-4.0/6.0*Math.PI) - Math.PI/6.0;
+        }
+        else if(puckCenter.y()>userPositionTopLeft.y()+userWidth){
+            collisionTest=new Vector(collisionTest.x(), userPositionTopLeft.y()+userHeight);
+            theta = 1.0/2.0*Math.PI;
+        }
+
+        if(collisionTest.distanceTo(puckCenter) <= puckRadius){
+            puck.doCollisionAction(new Direction(theta));
+        }
+
+
+        //Puck -> Bot
+        collisionTest=puckCenter;
+        theta = new Direction(puck.getVelocity()).getTheta();
+
+        if(puckCenter.x()<=botPositionTopLeft.x()){
+            collisionTest=new Vector(botPositionTopLeft.x(),collisionTest.y());
+            theta = 1.0/6.0*Math.PI;
+        }
+        else if(puckCenter.x()>botPositionTopLeft.x()+botWidth){
+            collisionTest=new Vector(botPositionTopLeft.x()+botWidth,collisionTest.y());
+            theta = 5.0/6.0*Math.PI;
+        }
+
+        if(puckCenter.y()>=botPositionTopLeft.y()+botHeight){
+            collisionTest=new Vector(collisionTest.x(), botPositionTopLeft.y()+botHeight);
+            theta = -(botWidth-(puckCenter.x()-botPositionTopLeft.x())/botWidth)*(-4.0/6.0*Math.PI) + Math.PI/6.0;
+        }
+        else if(puckCenter.y()<botPositionTopLeft.y()){
+            collisionTest=new Vector(collisionTest.x(), botPositionTopLeft.y()+botHeight);
+            theta = -1.0/2.0*Math.PI;
+        }
+
+        if(collisionTest.distanceTo(puckCenter) <= puckRadius){
+            puck.doCollisionAction(new Direction(theta));
         }
         // Puck -> Left/Right boundaries
         if(puckLeft.x() <= getLeftBoundary()){
